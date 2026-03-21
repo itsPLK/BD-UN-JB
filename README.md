@@ -8,6 +8,8 @@ It supports on-screen logging and network logging.
 Send bdj_unpatch.elf to elfldr to unpatch BD-J.  
 Then burn BD-UN-JB iso.  
 
+**DO NOT REINSTALL FW, IT WILL WIPE THE PATCH AND LOSE BD-JB**
+
 ---
 
 RemoteLogger server is listening on port 18194.  
