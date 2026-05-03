@@ -1,0 +1,5 @@
+*.iso
+discdir/
+src/**/*.class
+META-INF/
+.DS_Store

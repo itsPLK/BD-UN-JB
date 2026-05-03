@@ -1,0 +1,8 @@
+.git
+.gitignore
+discdir
+*.iso
+.DS_Store
+Dockerfile
+docker-compose.yml
+build_iso.sh

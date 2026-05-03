@@ -1,0 +1,36 @@
+
+services:
+  builder:
+    build: .
+    volumes:
+      - ..:/workspace  # Mount parent directory so BDJSDK_HOME (../../) resolves to /BD-UN-JB/
+    working_dir: /workspace/ps5_bdunjb_autoloader
+    command:
+      - /bin/bash
+      - -c
+      - |
+        set -euo pipefail
+
+        echo 'JAVA8_HOME=$$JAVA8_HOME'
+        echo 'BDJSDK_HOME=$$BDJSDK_HOME'
+        echo 'makefs available at: '$$(which makefs)
+        echo 'javac available at: '$$(which javac)
+        echo 'Current dir: '$$(pwd)
+
+        # Check if BDJSDK_HOME resources exist, if not build them
+        if [ ! -d "$$BDJSDK_HOME/resources" ]; then
+            echo 'BDJSDK resources not found, cloning bdj-sdk...'
+            git clone --depth 1 --recurse-submodules https://github.com/john-tornblom/bdj-sdk /tmp/bdj-sdk-build
+            cp -r /tmp/bdj-sdk-build/* $$BDJSDK_HOME/
+            rm -rf /tmp/bdj-sdk-build
+        fi
+
+        echo 'Building disc structure...'
+        make clean
+        make all
+
+        echo ''
+        echo 'Done! If successful, BD-UN-JB.iso should be in the current directory.'
+
+volumes:
+  makefs-cache:
