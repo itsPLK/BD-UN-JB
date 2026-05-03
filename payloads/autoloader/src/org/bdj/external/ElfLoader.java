@@ -194,8 +194,8 @@ public class ElfLoader {
                         "Exec mmap failed: 0x" + Long.toHexString(execResult));
                 }
 
-                Status.println("Mapped exec segment @ 0x" + Long.toHexString(destAddr) +
-                               " (size: 0x" + Long.toHexString(alignedSize) + ")");
+                // Status.println("Mapped exec segment @ 0x" + Long.toHexString(destAddr) +
+                //                " (size: 0x" + Long.toHexString(alignedSize) + ")");
 
             } else {
                 long dataResult = api.call(mmap,
@@ -214,8 +214,8 @@ public class ElfLoader {
                     api.memcpy(destAddr, segData, segData.length);
                 }
 
-                Status.println("Mapped data segment @ 0x" + Long.toHexString(destAddr) +
-                               " (size: 0x" + Long.toHexString(alignedSize) + ")");
+                // Status.println("Mapped data segment @ 0x" + Long.toHexString(destAddr) +
+                //                " (size: 0x" + Long.toHexString(alignedSize) + ")");
             }
         }
 
@@ -243,7 +243,7 @@ public class ElfLoader {
         }
 
         long elfEntryPoint = MAPPING_ADDR + eh.entry;
-        Status.println("ELF entry point: 0x" + Long.toHexString(elfEntryPoint));
+        // Status.println("ELF entry point: 0x" + Long.toHexString(elfEntryPoint));
         return elfEntryPoint;
     }
 
@@ -360,7 +360,7 @@ public class ElfLoader {
         args.putLong(0x20, kdata_base);       
         args.putLong(0x28, payloadout.address());
         
-        Status.println("Spawning ELF thread at: 0x" + Long.toHexString(elfEntryPoint));
+        // Status.println("Spawning ELF thread at: 0x" + Long.toHexString(elfEntryPoint));
         
         api.call(scePthreadAttrInit,           attr.address());
         api.call(scePthreadAttrSetstacksize,   attr.address(), 0x80000L);
@@ -373,15 +373,16 @@ public class ElfLoader {
             throw new RuntimeException("scePthreadCreate failed: " + String.valueOf(ret));
         }
         
-        Status.println("ELF thread spawned, handle: 0x" + Long.toHexString(thrHandle.get()));
+        // Status.println("ELF thread spawned, handle: 0x" + Long.toHexString(thrHandle.get()));
         return thrHandle.get();
     }
 
     private static void elfLoader(byte[] elfData) throws Exception {
+        Status.println("Loading elfldr");
         Int32 payloadout   = new Int32();
         long elfEntryPoint = elfParse(elfData);
         elfRun(elfEntryPoint, payloadout);
-        Status.println("done");
+        // Status.println("done");
     }
 
     public static void loadEmbeddedElf() {
@@ -399,8 +400,8 @@ public class ElfLoader {
             }
             byte[] elfData = buf.toByteArray();
             buf.close();
-            Status.println("Embedded ELF size: " + String.valueOf(elfData.length) +
-                        " bytes (0x" + Integer.toHexString(elfData.length) + ")");
+            // Status.println("Embedded ELF size: " + String.valueOf(elfData.length) +
+            //             " bytes (0x" + Integer.toHexString(elfData.length) + ")");
             loadElf(elfData);
         } catch (Exception e) {
             Status.printStackTrace("Failed to load embedded ELF: ", e);

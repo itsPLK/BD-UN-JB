@@ -284,7 +284,7 @@ public class Poops {
         //Status.info("NID path resolved");
         
         if(rerunCheck(NID_PATH)) {
-            Status.error("Restart your console to run exploit again");
+            Status.error("Restart your console to run exploit again, setup failed.");
             return false;
         }
         
@@ -1330,6 +1330,11 @@ public class Poops {
         Status.setNetworkLoggerEnabled(false);
         
         Status.info(VERSION_STRING);
+        
+        if (kapi.getKdataBase() != 0) {
+            Status.success("Already jailbroken");
+            return;
+        }
         
         if (!setup()) {
             Status.println("setup failed");

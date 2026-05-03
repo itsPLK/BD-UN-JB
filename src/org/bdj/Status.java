@@ -4,6 +4,7 @@ public class Status {
     private static RemoteLogger LOGGER;
     private static volatile boolean WINDOWBOOL = false;
     private static volatile boolean LOGGERBOOL = false;
+    private static int lastPercent = 0;
 
     public static void setScreenOutputEnabled(boolean windowbool) {
         WINDOWBOOL = windowbool;
@@ -80,10 +81,12 @@ public class Status {
         }
         if (WINDOWBOOL) {
             ProgressUI.getInstance().logError(finalMsg);
+            ProgressUI.getInstance().setProgress(lastPercent, "ERROR");
         }
     }
 
     public static void setProgress(int percent, String label) {
+        lastPercent = percent;
         if (WINDOWBOOL) {
             ProgressUI.getInstance().setProgress(percent, label);
         }
@@ -97,6 +100,7 @@ public class Status {
         }
         if (WINDOWBOOL) {
             ProgressUI.getInstance().logError(finalMsg);
+            ProgressUI.getInstance().setProgress(lastPercent, "ERROR");
             Screen.getInstance().printStackTrace(e);
         }
     }

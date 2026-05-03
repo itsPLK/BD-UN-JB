@@ -16,6 +16,7 @@
 
 
 DISC_LABEL := ps5-bd-jb-autoloader
+VERSION    := 0.2
 
 #
 # Host tools
@@ -35,7 +36,7 @@ export JAVA8_HOME
 # Compilation artifacts
 #
 CLASSPATH     := $(BDJSDK_HOME)/target/lib/enhanced-stubs.zip:$(BDJSDK_HOME)/target/lib/bdjstack.jar:$(BDJSDK_HOME)/target/lib/rt.jar
-SOURCES       := $(wildcard src/jdk/internal/misc/*.java) $(wildcard src/org/bdj/*.java) $(wildcard src/org/bdj/sandbox/*.java) $(wildcard src/org/bdj/api/*.java)
+SOURCES       := $(wildcard src/jdk/internal/misc/*.java) $(wildcard src/org/bdj/*.java) $(wildcard src/org/bdj/sandbox/*.java) $(wildcard src/org/bdj/api/*.java) src/org/bdj/Version.java
 JFLAGS        := -Xlint:-options -source 1.4 -target 1.4
 
 #
@@ -58,6 +59,12 @@ autoloader: discdir/BDMV/JAR/00000.jar
 poops: discdir/BDMV/JAR/00000.jar
 	$(MAKE) -C payloads/poops all
 
+src/org/bdj/Version.java:
+	echo "package org.bdj;" > $@
+	echo "public class Version {" >> $@
+	echo "    public static final String VERSION = \"$(VERSION)\";" >> $@
+	echo "}" >> $@
+
 discdir:
 	mkdir -p $(DISC_DIRS)
 
@@ -73,10 +80,11 @@ $(DISC_LABEL).iso: $(DISC_FILES) autoloader poops
 	cp payloads/autoloader/autoloader.jar discdir/autoloader.jar
 	cp payloads/poops/poops.jar discdir/poops.jar
 	cp -r BDMV/META discdir/BDMV/
+	sed -i "s/@@VERSION@@/$(VERSION)/g" discdir/BDMV/META/DL/bdmt_eng.xml
 	cp -r BDMV/BDJO discdir/BDMV/
 	cp -r ps5_autoloader discdir/
 	$(MAKEFS) -m 16m -t udf -o T=bdre,v=2.50,L=$(DISC_LABEL) $@ discdir
 
 clean:
-	rm -rf META-INF $(DISC_LABEL).iso discdir src/jdk/internal/misc/*.class src/org/bdj/*.class src/org/bdj/sandbox/*.class src/org/bdj/api/*.class 
+	rm -rf META-INF $(DISC_LABEL).iso discdir src/jdk/internal/misc/*.class src/org/bdj/*.class src/org/bdj/sandbox/*.class src/org/bdj/api/*.class src/org/bdj/Version.java
     

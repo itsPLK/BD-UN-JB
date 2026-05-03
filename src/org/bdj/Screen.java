@@ -62,7 +62,7 @@ public class Screen extends Container {
     private final ArrayList messages = new ArrayList();
     private int progressPercent = 0;
     private String progressMessage = "";
-    private String title = "PS5 BD-JB Autoloader";
+    private String title = "PS5 BD-JB Autoloader " + Version.VERSION;
 
     private static final Screen instance = new Screen();
 
