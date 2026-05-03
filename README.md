@@ -2,7 +2,7 @@
 
 **Note : YOU NEED ALREADY JAILBROKEN PS5**
 
-BD-UN-JB is RemoteJarLoader that can be used on already jailbroken PS5 upto 12.00 firmware.   
+BD-UN-JB is RemoteJarLoader that can be used on already jailbroken PS5 upto 13.20 firmware.   
 It supports on-screen logging and network logging.  
 
 Send bdj_unpatch.elf to elfldr to unpatch BD-J.  
