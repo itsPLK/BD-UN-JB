@@ -28,6 +28,10 @@ else
 ISO_VERSION := v$(VERSION)-$(BUILD_TYPE)-$(if $(GIT_DIRTY),$(shell date +"%Y%m%d%H%M%S"),$(GIT_HASH))
 endif
 ISO_FILE   := $(DISC_LABEL)-$(ISO_VERSION).iso
+XML_VERSION := $(VERSION)
+ifneq ($(BUILD_TYPE),stable)
+XML_VERSION := $(VERSION)-$(BUILD_TYPE)-$(GIT_HASH)
+endif
 
 #
 # Host tools
@@ -98,7 +102,7 @@ $(ISO_FILE): $(DISC_FILES) autoloader poops
 	cp payloads/autoloader/autoloader.jar discdir/autoloader.jar
 	cp payloads/poops/poops.jar discdir/poops.jar
 	cp -r BDMV/META discdir/BDMV/
-	sed -i "s/@@VERSION@@/$(VERSION)/g" discdir/BDMV/META/DL/bdmt_eng.xml
+	sed -i "s/@@VERSION@@/$(XML_VERSION)/g" discdir/BDMV/META/DL/bdmt_eng.xml
 	cp -r BDMV/BDJO discdir/BDMV/
 	cp -r ps5_autoloader discdir/
 	$(MAKEFS) -m 16m -t udf -o T=bdre,v=2.50,L=$(DISC_LABEL) $@ discdir
