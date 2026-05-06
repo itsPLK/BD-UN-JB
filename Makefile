@@ -21,7 +21,12 @@ VERSION    := 1.0
 # Git info for versioning
 GIT_HASH   := $(shell git rev-parse --short HEAD 2>/dev/null || echo "unknown")
 GIT_DIRTY  := $(shell git status --porcelain 2>/dev/null)
-ISO_VERSION := v$(VERSION)-$(if $(GIT_DIRTY),DEV-$(shell date +"%Y%m%d%H%M%S"),$(GIT_HASH))
+BUILD_TYPE ?= dev
+ifeq ($(BUILD_TYPE),stable)
+ISO_VERSION := v$(VERSION)-$(if $(GIT_DIRTY),$(shell date +"%Y%m%d%H%M%S"),$(GIT_HASH))
+else
+ISO_VERSION := v$(VERSION)-$(BUILD_TYPE)-$(if $(GIT_DIRTY),$(shell date +"%Y%m%d%H%M%S"),$(GIT_HASH))
+endif
 ISO_FILE   := $(DISC_LABEL)-$(ISO_VERSION).iso
 
 #
@@ -73,6 +78,7 @@ src/org/bdj/Version.java:
 	echo "package org.bdj;" > $@; \
 	echo "public class Version {" >> $@; \
 	echo "    public static final String VERSION = \"$(VERSION)\";" >> $@; \
+	echo "    public static final String BUILD_TYPE = \"$(BUILD_TYPE)\";" >> $@; \
 	echo "    public static final String HASH = \"$$HASH\";" >> $@; \
 	echo "    public static final String BUILD_TIME = \"$$BUILD_TIME\";" >> $@; \
 	echo "}" >> $@

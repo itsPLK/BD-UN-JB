@@ -64,7 +64,7 @@ public class Screen extends Container {
     private final ArrayList messages = new ArrayList();
     private int progressPercent = 0;
     private String progressMessage = "";
-    private String title = "PS5 BD-JB Autoloader " + Version.VERSION;
+    private String title = "PS5 BD-JB Autoloader " + Version.VERSION + ("stable".equals(Version.BUILD_TYPE) ? "" : "-" + Version.BUILD_TYPE);
 
     private static final Screen instance = new Screen();
 
@@ -381,7 +381,7 @@ public class Screen extends Container {
             // 5. Draw Footer (Version Info)
             targetG.setFont(VERSION_FONT);
             targetG.setColor(new Color(0x666666));
-            String versionStr = "PS5 BD-JB Autoloader v" + Version.VERSION + " by PLK (" + Version.HASH + ", built at " + Version.BUILD_TIME + ")";
+            String versionStr = "PS5 BD-JB Autoloader v" + Version.VERSION + ("stable".equals(Version.BUILD_TYPE) ? "" : "-" + Version.BUILD_TYPE) + " by PLK (" + Version.HASH + ", built at " + Version.BUILD_TIME + ")";
             targetG.drawString(versionStr, 12, height - 12);
 
             // If we used the off-screen buffer, copy it to the real graphics object

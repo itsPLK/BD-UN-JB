@@ -4,7 +4,7 @@ services:
     build: .
     volumes:
       - ..:/workspace  # Mount parent directory so BDJSDK_HOME (../../) resolves to /ps5-bd-jb-autoloader/
-    working_dir: /workspace/ps5_bdunjb_autoloader
+    working_dir: /workspace/ps5-bdjb-autoloader
     command:
       - /bin/bash
       - -c
