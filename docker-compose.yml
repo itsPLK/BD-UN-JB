@@ -11,6 +11,8 @@ services:
       - |
         set -euo pipefail
 
+        git config --global --add safe.directory '*'
+
         echo 'JAVA8_HOME=$$JAVA8_HOME'
         echo 'BDJSDK_HOME=$$BDJSDK_HOME'
         echo 'makefs available at: '$$(which makefs)
