@@ -15,7 +15,7 @@ import java.io.*;
 
 public class Poops {
     
-    private static final String VERSION_STRING = "BD-J Poopsploit 1.3";
+    private static final String VERSION_STRING = "BD-J Poopsploit 1.4";
     
     private static final int KERNEL_PID = 0;
     
@@ -313,7 +313,7 @@ public class Poops {
             
         } else if (PLATFORM.equals("PS5")) {
             
-            if (compareVersions(FW_VERSION, "10.00") < 0 || compareVersions(FW_VERSION, "12.00") > 0) {
+            if (compareVersions(FW_VERSION, "6.00") < 0 || compareVersions(FW_VERSION, "12.00") > 0) {
                 Status.error("UNSUPPORTED FW_VERSION: " + FW_VERSION);
                 return false;
             }

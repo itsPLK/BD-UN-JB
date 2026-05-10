@@ -25,13 +25,15 @@ public class PS5_KernelOffset {
         KernelOffsets = new Hashtable();
         
         // ALLPROC, SECURITY_FLAGS, ROOTVNODE, KERNEL_PMAP_STORE, GVMSPACE
-        addFirmwareOffsets("10.00", 0x2765D70, 0xD79064, 0x2FA3510, 0x2CF0EF8, 0x2D52570);
-        addFirmwareOffsets("11.00", 0x2875D70, 0xD8C064, 0x30B7510, 0x2E04F18, 0x2E66570);
-        addFirmwareOffsets("12.00", 0x2885E00, 0xD83064, 0x30D7510, 0x2E1CFB8, 0x2E7E570);
-
-        // 13.00 is untested
+        addFirmwareOffsets("6.xx", 0x2869D20, 0x65968EC, 0x679F510, 0x32E4358, 0x65540F0);
+        addFirmwareOffsets("7.xx", 0x2859D50, 0xAC8064, 0x30C7510, 0x2E2C848, 0x2E76090);
+        addFirmwareOffsets("8.xx", 0x2875D50, 0xAC3064, 0x30FB510, 0x2E48848, 0x2EAA090);
+        addFirmwareOffsets("9.00", 0x2755D50, 0xD72064, 0x2FDB510, 0x2D28B78, 0x2D28B78);
+        addFirmwareOffsets("9.xx", 0x2755D50, 0xD73064, 0x2FDB510, 0x2D28B78, 0x2D8A570);
+        addFirmwareOffsets("10.xx", 0x2765D70, 0xD79064, 0x2FA3510, 0x2CF0EF8, 0x2D52570);
+        addFirmwareOffsets("11.xx", 0x2875D70, 0xD8C064, 0x30B7510, 0x2E04F18, 0x2E66570);
+        addFirmwareOffsets("12.xx", 0x2885E00, 0xD83064, 0x30D7510, 0x2E1CFB8, 0x2E7E570);
         addFirmwareOffsets("13.00", 0x28C5E00, 0xD99064, 0x3133510, 0x2E74FF8, 0x2ED6570);
-
         addFirmwareOffsets("13.20", 0x28C5E00, 0xD99064, 0x3133510, 0x2E74FF8, 0x2ED6570);
     }
     
@@ -52,7 +54,7 @@ public class PS5_KernelOffset {
             offsets = (Hashtable) KernelOffsets.get(FW_VERSION);
         } else {
             String major = FW_VERSION.indexOf('.') != -1 ? FW_VERSION.substring(0, FW_VERSION.indexOf('.')) : FW_VERSION;
-            offsets = (Hashtable) KernelOffsets.get(major + ".00");
+            offsets = (Hashtable) KernelOffsets.get(major + ".xx");
         }
     
         if (offsets == null) {
